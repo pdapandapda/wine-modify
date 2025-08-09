@@ -501,9 +501,10 @@ static VkResult wine_vk_physical_device_init(struct wine_phys_dev *object, VkPhy
         //if (!strcmp(host_properties[i].extensionName, "VK_EXT_external_memory_host"))
             //have_external_memory_host = TRUE;
         //else
-            if (!strcmp(host_properties[i].extensionName, "VK_EXT_map_memory_placed"))
-            have_memory_placed = TRUE;
-        else if (!strcmp(host_properties[i].extensionName, "VK_KHR_map_memory2"))
+            //if (!strcmp(host_properties[i].extensionName, "VK_EXT_map_memory_placed"))
+            //have_memory_placed = TRUE;
+        //else 
+        if (!strcmp(host_properties[i].extensionName, "VK_KHR_map_memory2"))
             have_map_memory2 = TRUE;
     }
 
@@ -822,8 +823,8 @@ static VkResult wine_vk_device_convert_create_info(VkPhysicalDevice client_physi
         map_placed_features->memoryUnmapReserve = VK_TRUE;
         dst->pNext = map_placed_features;
 
-        if (!find_extension(extensions, extensions_count, "VK_EXT_map_memory_placed"))
-            extra_extensions[extra_count++] = "VK_EXT_map_memory_placed";
+        //if (!find_extension(extensions, extensions_count, "VK_EXT_map_memory_placed"))
+            //extra_extensions[extra_count++] = "VK_EXT_map_memory_placed";
         if (!find_extension(extensions, extensions_count, "VK_KHR_map_memory2"))
             extra_extensions[extra_count++] = "VK_KHR_map_memory2";
     }
@@ -831,8 +832,8 @@ static VkResult wine_vk_device_convert_create_info(VkPhysicalDevice client_physi
     {
         if (!find_extension(extensions, extensions_count, "VK_KHR_external_memory"))
             extra_extensions[extra_count++] = "VK_KHR_external_memory";
-        if (!find_extension(extensions, extensions_count, "VK_EXT_map_memory_placed"))
-            extra_extensions[extra_count++] = "VK_EXT_map_memory_placed";
+        //if (!find_extension(extensions, extensions_count, "VK_EXT_map_memory_placed"))
+            //extra_extensions[extra_count++] = "VK_EXT_map_memory_placed";
     }
 
     if (extra_count)
