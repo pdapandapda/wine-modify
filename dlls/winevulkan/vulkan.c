@@ -590,7 +590,7 @@ static VkResult wine_vk_physical_device_init(struct wine_phys_dev *object, VkPhy
         instance->p_vkGetPhysicalDeviceProperties2KHR(host_physical_device, &props);
         object->external_memory_align = host_mem_props.minImportedHostPointerAlignment;
         if (object->external_memory_align)
-            TRACE("Using VK_EXT_external_memory_host for memory mapping with alignment: %u\n",
+            TRACE("Using VK_EXT_map_memory_placed for memory mapping with alignment: %u\n",
                   object->external_memory_align);
     }
 
@@ -831,8 +831,8 @@ static VkResult wine_vk_device_convert_create_info(VkPhysicalDevice client_physi
     {
         if (!find_extension(extensions, extensions_count, "VK_KHR_external_memory"))
             extra_extensions[extra_count++] = "VK_KHR_external_memory";
-        if (!find_extension(extensions, extensions_count, "VK_EXT_external_memory_host"))
-            extra_extensions[extra_count++] = "VK_EXT_external_memory_host";
+        if (!find_extension(extensions, extensions_count, "VK_EXT_map_memory_placed"))
+            extra_extensions[extra_count++] = "VK_EXT_map_memory_placed";
     }
 
     if (extra_count)
@@ -2762,7 +2762,7 @@ VkResult wine_vkAllocateMemory(VkDevice client_device, const VkMemoryAllocateInf
         static int once;
 
         if (!once++)
-            FIXME("Using VK_EXT_external_memory_host\n");
+            FIXME("Using VK_EXT_map_memory_placed\n");
 
         if (NtAllocateVirtualMemory(GetCurrentProcess(), &mapping, zero_bits, &alloc_size,
                                     MEM_COMMIT, PAGE_READWRITE))
