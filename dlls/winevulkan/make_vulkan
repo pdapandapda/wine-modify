@@ -105,6 +105,7 @@ UNSUPPORTED_EXTENSIONS = [
     "VK_NV_external_compute_queue", # Has a new dispatchable handle
 
     # Extensions for other platforms
+    "VK_EXT_external_memory_host"
     "VK_EXT_external_memory_dma_buf",
     "VK_EXT_image_drm_format_modifier",
     "VK_EXT_metal_objects",
