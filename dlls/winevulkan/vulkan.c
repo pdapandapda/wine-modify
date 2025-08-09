@@ -498,9 +498,10 @@ static VkResult wine_vk_physical_device_init(struct wine_phys_dev *object, VkPhy
         {
             TRACE("Skipping extension '%s', no implementation found in winevulkan.\n", host_properties[i].extensionName);
         }
-        if (!strcmp(host_properties[i].extensionName, "VK_EXT_external_memory_host"))
-            have_external_memory_host = TRUE;
-        else if (!strcmp(host_properties[i].extensionName, "VK_EXT_map_memory_placed"))
+        //if (!strcmp(host_properties[i].extensionName, "VK_EXT_external_memory_host"))
+            //have_external_memory_host = TRUE;
+        //else
+            if (!strcmp(host_properties[i].extensionName, "VK_EXT_map_memory_placed"))
             have_memory_placed = TRUE;
         else if (!strcmp(host_properties[i].extensionName, "VK_KHR_map_memory2"))
             have_map_memory2 = TRUE;
