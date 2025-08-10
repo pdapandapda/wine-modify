@@ -93,6 +93,7 @@ UNSUPPORTED_EXTENSIONS = [
     "VK_LUNARG_direct_driver_loading", # Implemented in the Vulkan loader
 
     # Device extensions
+    "VK_EXT_external_memory_host"
     "VK_AMD_display_native_hdr",
     "VK_EXT_full_screen_exclusive",
     "VK_GOOGLE_display_timing",
