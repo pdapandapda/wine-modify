@@ -576,23 +576,8 @@ static VkResult wine_vk_physical_device_init(struct wine_phys_dev *object, VkPhy
         }
     }
 
-    if (zero_bits && have_external_memory_host && !object->map_placed_align)
-    {
-        VkPhysicalDeviceExternalMemoryHostPropertiesEXT host_mem_props =
-        {
-            .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT,
-        };
-        VkPhysicalDeviceProperties2 props =
-        {
-            .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2,
-            .pNext = &host_mem_props,
-        };
-        instance->p_vkGetPhysicalDeviceProperties2KHR(host_physical_device, &props);
-        object->external_memory_align = host_mem_props.minImportedHostPointerAlignment;
-        if (object->external_memory_align)
-            TRACE("Using VK_EXT_external_memory_host for memory mapping with alignment: %u\n",
-                  object->external_memory_align);
-    }
+    // 移除 VK_EXT_external_memory_host 相关逻辑
+    // object->external_memory_align = 0; // 确保不使用外部内存对齐
 
     free(host_properties);
     return VK_SUCCESS;
@@ -829,10 +814,8 @@ static VkResult wine_vk_device_convert_create_info(VkPhysicalDevice client_physi
     }
     else if (phys_dev->external_memory_align)
     {
-        if (!find_extension(extensions, extensions_count, "VK_KHR_external_memory"))
-            extra_extensions[extra_count++] = "VK_KHR_external_memory";
-        //if (!find_extension(extensions, extensions_count, "VK_EXT_external_memory_host"))
-            //extra_extensions[extra_count++] = "VK_EXT_external_memory_host";
+        // 移除 VK_EXT_external_memory_host 相关逻辑
+        // 不添加任何外部内存扩展
     }
 
     if (extra_count)
@@ -977,7 +960,8 @@ static VkResult wine_vk_instance_convert_create_info(struct conversion_context *
     if (use_external_memory())
     {
         new_extensions[dst->enabledExtensionCount++] = "VK_KHR_get_physical_device_properties2";
-        new_extensions[dst->enabledExtensionCount++] = "VK_KHR_external_memory_capabilities";
+        // 移除 VK_KHR_external_memory_capabilities
+        // new_extensions[dst->enabledExtensionCount++] = "VK_KHR_external_memory_capabilities";
     }
 
     TRACE("Enabled %u instance extensions.\n", dst->enabledExtensionCount);
